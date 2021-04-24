@@ -6,7 +6,6 @@ import img_tree_n from './assets/tree_n.png';
 import img_well from './assets/well.png';
 import img_well_n from './assets/well_n.png';
 import img_player from './assets/imar.png';
-import map from './assets/map1.json';
 
 import img_flower1 from './assets/flower1.png';
 import img_flower1_n from './assets/flower1_n.png';
@@ -21,6 +20,9 @@ import img_blood1_n from './assets/blood_n.png';
 import img_corpse1 from './assets/corpse1.png';
 import img_corpse1_n from './assets/corpse1_n.png';
 import img_fire from './assets/fire.png';
+
+import map1 from './assets/map1.json';
+import map2 from './assets/map2.json';
 
 class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
@@ -164,6 +166,24 @@ class Fire {
     }
 }
 
+class Well extends Entity {
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key);
+
+        this.body.setCollideWorldBounds(true);
+        this.setPipeline('Light2D');
+        
+        //this.body.setSize(24, 24);
+        //this.body.setOffset((this.displayWidth-24)/2, this.displayHeight-24);
+
+        this.setDepth(this.y + this.displayHeight/2);
+    }
+
+    init() {
+        this.body.setImmovable(true);
+    }
+}
+
 class MyGame extends Phaser.Scene
 {
     constructor ()
@@ -174,6 +194,7 @@ class MyGame extends Phaser.Scene
     preload()
     {
         this.load.image('tiles', [img_tiles, img_tiles_n]);
+        this.load.image('well', [img_well, img_well_n]);
         this.load.image('tree', [img_tree, img_tree_n]);
         this.load.image('flower1', [img_flower1, img_flower1_n]);
         this.load.image('flower2', [img_flower2, img_flower2_n]);
@@ -185,28 +206,21 @@ class MyGame extends Phaser.Scene
 
         this.load.spritesheet('imar', [img_imar, img_imar_n], {frameWidth: 32, frameHeight: 48});
 
-        this.load.tilemapTiledJSON('map', map);
+        this.load.tilemapTiledJSON('map1', map1);
+        this.load.tilemapTiledJSON('map2', map2);
     }
       
     create()
     {
         this.createAnimations();
 
-        this.map = this.make.tilemap({key: 'map'});
-        let tiles = this.map.addTilesetImage('tiles', 'tiles');
-        let layer = this.map.createLayer(0, tiles, 0, 0);
-        layer.setPipeline('Light2D');
-        layer.setDepth(-100);
-        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
         this.decorations = this.add.group();
         this.trees = this.physics.add.group();
-        this.loadScene();
 
         this.player = new Player(this, 300, 300, 'imar');
 
-        let collider = this.physics.add.collider(this.player, this.trees);
+        this.colliderTrees = this.physics.add.collider(this.player, this.trees);
 
         this.lights.enable().setAmbientColor(0x555555);
 
@@ -220,9 +234,56 @@ class MyGame extends Phaser.Scene
         //light.setColor(0xff00ff).setIntensity(5.0);
 
         //
-        this.fire_particles = this.add.particles('fire');
-        this.fireplaces = [];
-        this.fireplaces.push(new Fire(this, 400, 300));
+        // this.fire_particles = this.add.particles('fire');
+        // this.fireplaces = [];
+        // this.fireplaces.push(new Fire(this, 400, 300));
+
+        this.colliderWell = null;
+
+        this.well = null;
+
+        this.maps = ['map1', 'map2'];
+        this.level = 0;
+
+        this.initLevel();
+        //this.loadScene();
+
+        //this.nextLevel();
+    }
+
+    initLevel() {
+        this.map = this.make.tilemap({key: this.maps[this.level]});
+        console.log(this.map);
+        let tiles = this.map.addTilesetImage('tiles', 'tiles');
+        this.layer = this.map.createLayer(0, tiles, 0, 0);
+        this.layer.setPipeline('Light2D');
+        this.layer.setDepth(-100);
+        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+        this.loadScene();
+    }
+
+    destroyLevel() {
+        this.trees.children.each(x=>x.destroy());
+        this.decorations.children.each(x=>x.destroy());
+        this.layer.destroy();
+        this.map.destroy();
+        if (this.well != null) {
+            this.well.destroy();
+            this.colliderWell.destroy();
+        }
+    }
+
+    restartLevel() {
+        this.destroyLevel();
+        this.initLevel();
+    }
+
+    nextLevel() {
+        this.destroyLevel();
+        this.level++;
+        this.initLevel();
     }
 
     update() {
@@ -263,6 +324,12 @@ class MyGame extends Phaser.Scene
         });
         this.map.filterObjects('corpses', (obj) => {
             this.decorations.add(new Decoration(this, obj.x, obj.y, 'corpse1', false)); // zmienic na przeszkode
+        });
+        this.map.filterObjects('well', (obj) => {
+            this.well = new Decoration(this, obj.x, obj.y, 'well', false);
+            this.colliderWell = this.physics.add.collider(this.player, this.well, (player, well) => {
+                this.nextLevel();
+            }, null, this);
         });
     }
 

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="18" height="14" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="113">
+ <editorsettings>
+  <export target="map2.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" tilecount="3" columns="3">
+  <image source="tiles.png" width="198" height="66"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="18" height="14">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="8" name="well">
+  <object id="112" x="32" y="50.6667">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="blood">
+  <object id="96" x="1018.67" y="102.667">
+   <point/>
+  </object>
+  <object id="97" x="893.333" y="66.6667">
+   <point/>
+  </object>
+  <object id="98" x="977.333" y="204">
+   <point/>
+  </object>
+  <object id="99" x="1037.33" y="654.667">
+   <point/>
+  </object>
+  <object id="100" x="976" y="697.333">
+   <point/>
+  </object>
+  <object id="101" x="876" y="817.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="corpses">
+  <object id="89" x="861.333" y="100">
+   <point/>
+  </object>
+  <object id="90" x="946.667" y="158.667">
+   <point/>
+  </object>
+  <object id="91" x="1014.67" y="77.3333">
+   <point/>
+  </object>
+  <object id="92" x="1073.33" y="121.333">
+   <point/>
+  </object>
+  <object id="93" x="1068" y="218.667">
+   <point/>
+  </object>
+  <object id="94" x="356" y="106.667">
+   <point/>
+  </object>
+  <object id="95" x="408" y="106.667">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="2" name="trees">
+  <object id="102" x="493.333" y="286.667">
+   <point/>
+  </object>
+  <object id="103" x="544" y="333.333">
+   <point/>
+  </object>
+  <object id="104" x="593.333" y="381.333">
+   <point/>
+  </object>
+  <object id="105" x="641.333" y="422.667">
+   <point/>
+  </object>
+  <object id="106" x="702.667" y="466.667">
+   <point/>
+  </object>
+  <object id="107" x="773.333" y="520">
+   <point/>
+  </object>
+  <object id="108" x="106.667" y="288">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="flower1">
+  <object id="62" x="470.667" y="778.667">
+   <point/>
+  </object>
+  <object id="63" x="397.333" y="753.333">
+   <point/>
+  </object>
+  <object id="64" x="402.667" y="694.667">
+   <point/>
+  </object>
+  <object id="65" x="305.333" y="670.667">
+   <point/>
+  </object>
+  <object id="66" x="266.667" y="589.333">
+   <point/>
+  </object>
+  <object id="67" x="113.333" y="561.333">
+   <point/>
+  </object>
+  <object id="68" x="42.6667" y="634.667">
+   <point/>
+  </object>
+  <object id="69" x="130.667" y="732">
+   <point/>
+  </object>
+  <object id="70" x="72" y="778.667">
+   <point/>
+  </object>
+  <object id="71" x="229.333" y="825.333">
+   <point/>
+  </object>
+  <object id="72" x="377.333" y="798.667">
+   <point/>
+  </object>
+  <object id="73" x="214.667" y="672">
+   <point/>
+  </object>
+  <object id="85" x="921.333" y="45.3333">
+   <point/>
+  </object>
+  <object id="86" x="981.333" y="96">
+   <point/>
+  </object>
+  <object id="87" x="1042.67" y="154.667">
+   <point/>
+  </object>
+  <object id="88" x="1117.33" y="206.667">
+   <point/>
+  </object>
+  <object id="110" x="600" y="389.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="flower2">
+  <object id="74" x="132" y="648">
+   <point/>
+  </object>
+  <object id="75" x="270.667" y="730.667">
+   <point/>
+  </object>
+  <object id="76" x="89.3333" y="826.667">
+   <point/>
+  </object>
+  <object id="82" x="978.667" y="48">
+   <point/>
+  </object>
+  <object id="83" x="1049.33" y="97.3333">
+   <point/>
+  </object>
+  <object id="84" x="1108" y="150.667">
+   <point/>
+  </object>
+  <object id="109" x="128" y="302.667">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="flower3">
+  <object id="77" x="308" y="838.667">
+   <point/>
+  </object>
+  <object id="78" x="185.333" y="600">
+   <point/>
+  </object>
+  <object id="79" x="1110.67" y="41.3333">
+   <point/>
+  </object>
+  <object id="80" x="1102.67" y="108">
+   <point/>
+  </object>
+  <object id="81" x="1049.33" y="46.6667">
+   <point/>
+  </object>
+ </objectgroup>
+</map>
