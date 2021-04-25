@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="24" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="390">
+ <editorsettings>
+  <export target="map_o4.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="15" columns="3">
+  <image source="tiles.png" width="198" height="330"/>
+  <tile id="0">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="24" height="32">
+  <data encoding="csv">
+8,8,8,8,9,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,
+8,8,8,8,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,
+8,8,8,11,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+8,8,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+11,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,4,5,6,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,15,15,8,5,6,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,15,15,15,15,15,8,9,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,15,15,15,15,15,15,15,8,9,1,1,1,1,1,1,1,1,1,
+1,1,1,1,15,15,15,15,15,15,15,15,15,8,9,1,1,1,1,1,1,1,1,1,
+1,1,15,15,15,15,15,15,15,15,15,15,15,8,1,1,1,1,1,1,1,1,1,1,
+15,15,15,15,15,15,15,15,15,15,15,15,15,12,1,1,1,1,1,1,1,1,1,1,
+15,15,15,15,15,15,15,15,15,15,15,15,14,1,1,1,1,1,1,1,1,1,1,1,
+15,15,15,15,15,15,15,15,15,15,15,15,14,1,1,1,1,1,1,1,1,1,1,1,
+15,15,15,15,15,15,15,15,15,15,15,15,14,1,1,1,1,1,1,1,1,1,1,1,
+15,15,15,15,15,1,1,1,1,1,1,15,14,1,1,1,1,1,1,1,1,1,1,1,
+15,1,1,1,1,1,1,1,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,3,3,3,3,3,3,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,3,1,1,1,1,3,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,3,1,1,1,1,3,1,1,14,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,3,1,1,1,1,3,1,1,13,13,13,13,13,13,1,1,13,13,13,13,
+2,1,1,1,3,3,3,3,3,3,1,1,1,1,2,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,5,
+1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,4,8,8,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,7,8,8
+</data>
+ </layer>
+ <objectgroup id="11" name="fireplaces">
+  <object id="289" x="924.242" y="1315.15">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="player">
+  <object id="287" x="127.273" y="1939.39">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="creatures">
+  <object id="326" x="1342.42" y="1884.85">
+   <point/>
+  </object>
+  <object id="327" x="1251.52" y="1818.18">
+   <point/>
+  </object>
+  <object id="328" x="1303.03" y="1696.97">
+   <point/>
+  </object>
+  <object id="374" x="490.909" y="69.697">
+   <point/>
+  </object>
+  <object id="375" x="781.818" y="1666.67">
+   <point/>
+  </object>
+  <object id="376" x="818.182" y="1709.09">
+   <point/>
+  </object>
+  <object id="377" x="839.394" y="1766.67">
+   <point/>
+  </object>
+  <object id="378" x="536.364" y="993.939">
+   <point/>
+  </object>
+  <object id="379" x="666.667" y="987.879">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="well">
+  <object id="288" x="96.9697" y="536.364">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="blood">
+  <object id="315" x="569.697" y="230.303">
+   <point/>
+  </object>
+  <object id="316" x="366.667" y="200">
+   <point/>
+  </object>
+  <object id="317" x="254.545" y="296.97">
+   <point/>
+  </object>
+  <object id="318" x="436.364" y="406.061">
+   <point/>
+  </object>
+  <object id="319" x="1375.76" y="912.121">
+   <point/>
+  </object>
+  <object id="320" x="1181.82" y="848.485">
+   <point/>
+  </object>
+  <object id="321" x="1148.48" y="824.242">
+   <point/>
+  </object>
+  <object id="322" x="1090.91" y="427.273">
+   <point/>
+  </object>
+  <object id="323" x="1439.39" y="1521.21">
+   <point/>
+  </object>
+  <object id="324" x="1284.85" y="1512.12">
+   <point/>
+  </object>
+  <object id="325" x="1124.24" y="1548.48">
+   <point/>
+  </object>
+  <object id="386" x="1057.58" y="1830.3">
+   <point/>
+  </object>
+  <object id="387" x="1084.85" y="1854.55">
+   <point/>
+  </object>
+  <object id="388" x="1130.3" y="1806.06">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="corpses">
+  <object id="305" x="1463.64" y="1030.3">
+   <point/>
+  </object>
+  <object id="306" x="1021.21" y="809.091">
+   <point/>
+  </object>
+  <object id="307" x="1236.36" y="390.909">
+   <point/>
+  </object>
+  <object id="308" x="303.03" y="181.818">
+   <point/>
+  </object>
+  <object id="309" x="933.333" y="387.879">
+   <point/>
+  </object>
+  <object id="310" x="715.152" y="75.7576">
+   <point/>
+  </object>
+  <object id="311" x="303.03" y="493.939">
+   <point/>
+  </object>
+  <object id="312" x="451.515" y="293.939">
+   <point/>
+  </object>
+  <object id="313" x="666.667" y="281.818">
+   <point/>
+  </object>
+  <object id="314" x="560.606" y="148.485">
+   <point/>
+  </object>
+  <object id="389" x="1093.94" y="1815.15">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="2" name="trees">
+  <object id="294" x="936.364" y="951.515">
+   <point/>
+  </object>
+  <object id="295" x="1072.73" y="1000">
+   <point/>
+  </object>
+  <object id="296" x="1300" y="781.818">
+   <point/>
+  </object>
+  <object id="297" x="1006.06" y="612.121">
+   <point/>
+  </object>
+  <object id="298" x="1303.03" y="500">
+   <point/>
+  </object>
+  <object id="299" x="1127.27" y="139.394">
+   <point/>
+  </object>
+  <object id="300" x="454.545" y="969.697">
+   <point/>
+  </object>
+  <object id="301" x="172.727" y="1078.79">
+   <point/>
+  </object>
+  <object id="302" x="651.515" y="1269.7">
+   <point/>
+  </object>
+  <object id="303" x="372.727" y="1293.94">
+   <point/>
+  </object>
+  <object id="304" x="157.576" y="1530.3">
+   <point/>
+  </object>
+  <object id="365" x="463.636" y="1209.09">
+   <point/>
+  </object>
+  <object id="381" x="1263.64" y="933.333">
+   <point/>
+  </object>
+  <object id="382" x="1206.06" y="669.697">
+   <point/>
+  </object>
+  <object id="383" x="890.909" y="684.848">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="glows">
+  <object id="290" x="1557.58" y="-30.303">
+   <properties>
+    <property name="intensity" type="float" value="3"/>
+    <property name="r" type="int" value="600"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="291" x="318.182" y="954.545">
+   <properties>
+    <property name="intensity" type="float" value="2.5"/>
+    <property name="r" type="int" value="400"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="flower1">
+  <object id="329" x="193.939" y="1715.15">
+   <point/>
+  </object>
+  <object id="330" x="387.879" y="1893.94">
+   <point/>
+  </object>
+  <object id="331" x="536.364" y="1821.21">
+   <point/>
+  </object>
+  <object id="332" x="384.848" y="1663.64">
+   <point/>
+  </object>
+  <object id="333" x="896.97" y="1675.76">
+   <point/>
+  </object>
+  <object id="334" x="684.848" y="1536.36">
+   <point/>
+  </object>
+  <object id="335" x="1327.27" y="1887.88">
+   <point/>
+  </object>
+  <object id="336" x="1424.24" y="1578.79">
+   <point/>
+  </object>
+  <object id="337" x="1069.7" y="1612.12">
+   <point/>
+  </object>
+  <object id="338" x="939.394" y="1154.55">
+   <point/>
+  </object>
+  <object id="339" x="1357.58" y="1245.45">
+   <point/>
+  </object>
+  <object id="340" x="1445.45" y="1139.39">
+   <point/>
+  </object>
+  <object id="341" x="1466.67" y="657.576">
+   <point/>
+  </object>
+  <object id="342" x="1163.64" y="566.667">
+   <point/>
+  </object>
+  <object id="343" x="1284.85" y="263.636">
+   <point/>
+  </object>
+  <object id="344" x="706.061" y="187.879">
+   <point/>
+  </object>
+  <object id="384" x="36.3636" y="1660.61">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="flower2">
+  <object id="345" x="387.879" y="1087.88">
+   <point/>
+  </object>
+  <object id="346" x="506.061" y="1160.61">
+   <point/>
+  </object>
+  <object id="347" x="624.242" y="1078.79">
+   <point/>
+  </object>
+  <object id="348" x="1260.61" y="124.242">
+   <point/>
+  </object>
+  <object id="349" x="1387.88" y="221.212">
+   <point/>
+  </object>
+  <object id="350" x="1415.15" y="363.636">
+   <point/>
+  </object>
+  <object id="351" x="1439.39" y="93.9394">
+   <point/>
+  </object>
+  <object id="385" x="221.212" y="81.8182">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="flower3">
+  <object id="352" x="1033.33" y="100">
+   <point/>
+  </object>
+  <object id="353" x="100" y="1230.3">
+   <point/>
+  </object>
+  <object id="354" x="272.727" y="1863.64">
+   <point/>
+  </object>
+  <object id="355" x="484.848" y="1987.88">
+   <point/>
+  </object>
+  <object id="356" x="663.636" y="1875.76">
+   <point/>
+  </object>
+  <object id="357" x="478.788" y="1748.48">
+   <point/>
+  </object>
+  <object id="358" x="648.485" y="1690.91">
+   <point/>
+  </object>
+  <object id="359" x="927.273" y="1872.73">
+   <point/>
+  </object>
+  <object id="360" x="1296.97" y="1945.45">
+   <point/>
+  </object>
+  <object id="361" x="1384.85" y="1763.64">
+   <point/>
+  </object>
+  <object id="362" x="981.818" y="1248.48">
+   <point/>
+  </object>
+  <object id="363" x="1045.45" y="1133.33">
+   <point/>
+  </object>
+  <object id="364" x="915.152" y="969.697">
+   <point/>
+  </object>
+  <object id="366" x="936.364" y="181.818">
+   <point/>
+  </object>
+  <object id="367" x="90.9091" y="109.091">
+   <point/>
+  </object>
+  <object id="368" x="121.212" y="336.364">
+   <point/>
+  </object>
+  <object id="369" x="193.939" y="566.667">
+   <point/>
+  </object>
+  <object id="370" x="54.5455" y="642.424">
+   <point/>
+  </object>
+  <object id="371" x="1463.64" y="775.758">
+   <point/>
+  </object>
+  <object id="372" x="1048.48" y="1360.61">
+   <point/>
+  </object>
+  <object id="373" x="1451.52" y="1333.33">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="monstrosities">
+  <object id="292" x="1212.12" y="1145.45">
+   <point/>
+  </object>
+  <object id="293" x="127.273" y="436.364">
+   <point/>
+  </object>
+  <object id="380" x="509.091" y="1287.88">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

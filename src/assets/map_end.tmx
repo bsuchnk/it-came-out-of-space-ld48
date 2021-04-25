@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="64" tileheight="64" infinite="0" nextlayerid="13" nextobjectid="272">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="287">
  <editorsettings>
   <export target="map_end.json" format="json"/>
  </editorsettings>
@@ -139,7 +139,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="9" name="creatures" visible="0">
+ <objectgroup id="9" name="creatures">
   <object id="176" x="2020" y="2916">
    <point/>
   </object>
@@ -170,15 +170,42 @@
   <object id="185" x="2012" y="2384">
    <point/>
   </object>
+  <object id="272" x="2434.51" y="2101.52">
+   <point/>
+  </object>
+  <object id="273" x="614.178" y="2127.42">
+   <point/>
+  </object>
+  <object id="274" x="410.685" y="1565.04">
+   <point/>
+  </object>
+  <object id="275" x="2286.52" y="1331.95">
+   <point/>
+  </object>
+  <object id="276" x="1479.95" y="784.372">
+   <point/>
+  </object>
+  <object id="277" x="1017.46" y="847.27">
+   <point/>
+  </object>
+  <object id="278" x="599.379" y="525.381">
+   <point/>
+  </object>
+  <object id="279" x="2197.72" y="499.482">
+   <point/>
+  </object>
+  <object id="280" x="2737.9" y="1202.46">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="8" name="well">
-  <object id="271" x="1565.04" y="1516.95">
+  <object id="271" x="1568.74" y="1568.74">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="6" name="blood" visible="0"/>
  <objectgroup id="7" name="corpses" visible="0"/>
- <objectgroup id="2" name="trees" visible="0">
+ <objectgroup id="2" name="trees">
   <object id="186" x="2280" y="2452">
    <point/>
   </object>
@@ -216,6 +243,9 @@
    <point/>
   </object>
   <object id="198" x="2492" y="1948">
+   <point/>
+  </object>
+  <object id="281" x="2034.93" y="1705.64">
    <point/>
   </object>
  </objectgroup>
@@ -444,6 +474,23 @@
    <point/>
   </object>
   <object id="226" x="252" y="2776">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="monstrosities">
+  <object id="282" x="625.278" y="2708.3">
+   <point/>
+  </object>
+  <object id="283" x="1043.36" y="307.089">
+   <point/>
+  </object>
+  <object id="284" x="2404.91" y="1724.14">
+   <point/>
+  </object>
+  <object id="285" x="2700.9" y="2641.71">
+   <point/>
+  </object>
+  <object id="286" x="147.995" y="2068.23">
    <point/>
   </object>
  </objectgroup>

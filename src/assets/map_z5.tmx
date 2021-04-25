@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="26" height="16" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="508">
+ <editorsettings>
+  <export target="map_z5.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="15" columns="3">
+  <image source="tiles.png" width="198" height="330"/>
+  <tile id="0">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="26" height="16">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,
+1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,1,1,1,
+1,1,1,1,1,2,2,2,2,2,2,2,1,1,15,15,15,15,1,1,1,1,1,1,1,1,
+1,1,1,1,1,2,2,2,2,2,2,2,1,15,15,15,15,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,13,13,13,13,13,15,15,15,15,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,3,3,3,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,1,3,1,3,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,1,3,3,3,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,1,1,1,1,1,1,1,1,1,1,
+3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1,1,
+3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="11" name="fireplaces">
+  <object id="454" x="669.697" y="712.121">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="player">
+  <object id="395" x="1530.3" y="190.909">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="creatures">
+  <object id="441" x="730.303" y="115.152">
+   <point/>
+  </object>
+  <object id="442" x="560.606" y="100">
+   <point/>
+  </object>
+  <object id="443" x="860.606" y="351.515">
+   <point/>
+  </object>
+  <object id="444" x="93.9394" y="403.03">
+   <point/>
+  </object>
+  <object id="445" x="93.9394" y="793.939">
+   <point/>
+  </object>
+  <object id="446" x="403.03" y="939.394">
+   <point/>
+  </object>
+  <object id="476" x="27.2727" y="963.636">
+   <point/>
+  </object>
+  <object id="477" x="75.7576" y="893.939">
+   <point/>
+  </object>
+  <object id="478" x="200" y="933.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="well">
+  <object id="471" x="900" y="84.8485">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="blood">
+  <object id="461" x="627.273" y="751.515">
+   <point/>
+  </object>
+  <object id="462" x="715.152" y="781.818">
+   <point/>
+  </object>
+  <object id="463" x="578.788" y="654.545">
+   <point/>
+  </object>
+  <object id="464" x="330.303" y="787.879">
+   <point/>
+  </object>
+  <object id="465" x="109.091" y="484.848">
+   <point/>
+  </object>
+  <object id="466" x="772.727" y="554.545">
+   <point/>
+  </object>
+  <object id="467" x="827.273" y="136.364">
+   <point/>
+  </object>
+  <object id="468" x="648.485" y="184.848">
+   <point/>
+  </object>
+  <object id="469" x="548.485" y="142.424">
+   <point/>
+  </object>
+  <object id="470" x="890.909" y="206.061">
+   <point/>
+  </object>
+  <object id="472" x="1496.97" y="266.667">
+   <point/>
+  </object>
+  <object id="473" x="1563.64" y="245.455">
+   <point/>
+  </object>
+  <object id="474" x="1615.15" y="369.697">
+   <point/>
+  </object>
+  <object id="475" x="1587.88" y="103.03">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="corpses">
+  <object id="447" x="709.091" y="863.636">
+   <point/>
+  </object>
+  <object id="448" x="739.394" y="933.333">
+   <point/>
+  </object>
+  <object id="449" x="803.03" y="981.818">
+   <point/>
+  </object>
+  <object id="450" x="578.788" y="966.667">
+   <point/>
+  </object>
+  <object id="451" x="639.394" y="890.909">
+   <point/>
+  </object>
+  <object id="452" x="639.394" y="803.03">
+   <point/>
+  </object>
+  <object id="453" x="784.848" y="775.758">
+   <point/>
+  </object>
+  <object id="455" x="606.061" y="718.182">
+   <point/>
+  </object>
+  <object id="456" x="666.667" y="742.424">
+   <point/>
+  </object>
+  <object id="457" x="739.394" y="715.152">
+   <point/>
+  </object>
+  <object id="458" x="654.545" y="666.667">
+   <point/>
+  </object>
+  <object id="459" x="706.061" y="657.576">
+   <point/>
+  </object>
+  <object id="460" x="718.182" y="724.242">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="2" name="trees">
+  <object id="425" x="681.818" y="533.333">
+   <point/>
+  </object>
+  <object id="426" x="157.576" y="118.182">
+   <point/>
+  </object>
+  <object id="427" x="275.758" y="633.333">
+   <point/>
+  </object>
+  <object id="428" x="657.576" y="3.0303">
+   <point/>
+  </object>
+  <object id="429" x="142.424" y="990.909">
+   <point/>
+  </object>
+  <object id="430" x="687.879" y="981.818">
+   <point/>
+  </object>
+  <object id="431" x="1103.03" y="951.515">
+   <point/>
+  </object>
+  <object id="432" x="1569.7" y="696.97">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="glows">
+  <object id="433" x="0" y="0">
+   <properties>
+    <property name="intensity" type="float" value="6"/>
+    <property name="r" type="int" value="1000"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="434" x="957.576" y="1021.21">
+   <properties>
+    <property name="intensity" type="float" value="4"/>
+    <property name="r" type="int" value="700"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="flower1">
+  <object id="396" x="1366.67" y="160.606">
+   <point/>
+  </object>
+  <object id="397" x="1500" y="33.3333">
+   <point/>
+  </object>
+  <object id="398" x="1621.21" y="318.182">
+   <point/>
+  </object>
+  <object id="399" x="1318.18" y="357.576">
+   <point/>
+  </object>
+  <object id="400" x="1463.64" y="539.394">
+   <point/>
+  </object>
+  <object id="401" x="1257.58" y="551.515">
+   <point/>
+  </object>
+  <object id="402" x="1463.64" y="706.061">
+   <point/>
+  </object>
+  <object id="403" x="1569.7" y="484.848">
+   <point/>
+  </object>
+  <object id="404" x="1351.52" y="418.182">
+   <point/>
+  </object>
+  <object id="405" x="1315.15" y="548.485">
+   <point/>
+  </object>
+  <object id="406" x="1151.52" y="469.697">
+   <point/>
+  </object>
+  <object id="407" x="1184.85" y="706.061">
+   <point/>
+  </object>
+  <object id="408" x="1490.91" y="833.333">
+   <point/>
+  </object>
+  <object id="409" x="1463.64" y="963.636">
+   <point/>
+  </object>
+  <object id="410" x="1242.42" y="927.273">
+   <point/>
+  </object>
+  <object id="486" x="1381.82" y="306.061">
+   <point/>
+  </object>
+  <object id="487" x="1512.12" y="384.848">
+   <point/>
+  </object>
+  <object id="488" x="893.939" y="145.455">
+   <point/>
+  </object>
+  <object id="489" x="684.848" y="242.424">
+   <point/>
+  </object>
+  <object id="490" x="524.242" y="269.697">
+   <point/>
+  </object>
+  <object id="491" x="300" y="245.455">
+   <point/>
+  </object>
+  <object id="492" x="215.152" y="357.576">
+   <point/>
+  </object>
+  <object id="493" x="393.939" y="572.727">
+   <point/>
+  </object>
+  <object id="494" x="521.212" y="712.121">
+   <point/>
+  </object>
+  <object id="495" x="512.121" y="812.121">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="flower2">
+  <object id="418" x="733.333" y="415.152">
+   <point/>
+  </object>
+  <object id="419" x="672.727" y="354.545">
+   <point/>
+  </object>
+  <object id="420" x="603.03" y="415.152">
+   <point/>
+  </object>
+  <object id="421" x="539.394" y="351.515">
+   <point/>
+  </object>
+  <object id="422" x="478.788" y="415.152">
+   <point/>
+  </object>
+  <object id="423" x="412.121" y="348.485">
+   <point/>
+  </object>
+  <object id="424" x="345.455" y="412.121">
+   <point/>
+  </object>
+  <object id="496" x="457.576" y="642.424">
+   <point/>
+  </object>
+  <object id="497" x="75.7576" y="603.03">
+   <point/>
+  </object>
+  <object id="498" x="200" y="590.909">
+   <point/>
+  </object>
+  <object id="499" x="124.242" y="339.394">
+   <point/>
+  </object>
+  <object id="500" x="269.697" y="93.9394">
+   <point/>
+  </object>
+  <object id="501" x="27.2727" y="42.4242">
+   <point/>
+  </object>
+  <object id="502" x="1636.36" y="690.909">
+   <point/>
+  </object>
+  <object id="503" x="1627.27" y="993.939">
+   <point/>
+  </object>
+  <object id="504" x="1230.3" y="836.364">
+   <point/>
+  </object>
+  <object id="505" x="966.667" y="884.848">
+   <point/>
+  </object>
+  <object id="506" x="881.818" y="927.273">
+   <point/>
+  </object>
+  <object id="507" x="1015.15" y="966.667">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="flower3">
+  <object id="411" x="348.485" y="360.606">
+   <point/>
+  </object>
+  <object id="412" x="415.152" y="418.182">
+   <point/>
+  </object>
+  <object id="413" x="478.788" y="354.545">
+   <point/>
+  </object>
+  <object id="414" x="539.394" y="418.182">
+   <point/>
+  </object>
+  <object id="415" x="600" y="348.485">
+   <point/>
+  </object>
+  <object id="416" x="672.727" y="418.182">
+   <point/>
+  </object>
+  <object id="417" x="736.364" y="354.545">
+   <point/>
+  </object>
+  <object id="479" x="118.182" y="212.121">
+   <point/>
+  </object>
+  <object id="480" x="442.424" y="745.455">
+   <point/>
+  </object>
+  <object id="481" x="245.455" y="472.727">
+   <point/>
+  </object>
+  <object id="482" x="1378.79" y="742.424">
+   <point/>
+  </object>
+  <object id="483" x="1615.15" y="803.03">
+   <point/>
+  </object>
+  <object id="484" x="1615.15" y="569.697">
+   <point/>
+  </object>
+  <object id="485" x="1342.42" y="239.394">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="monstrosities">
+  <object id="435" x="1336.36" y="645.455">
+   <point/>
+  </object>
+  <object id="436" x="778.788" y="933.333">
+   <point/>
+  </object>
+  <object id="437" x="775.758" y="857.576">
+   <point/>
+  </object>
+  <object id="438" x="475.758" y="515.152">
+   <point/>
+  </object>
+  <object id="439" x="187.879" y="736.364">
+   <point/>
+  </object>
+  <object id="440" x="384.848" y="160.606">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

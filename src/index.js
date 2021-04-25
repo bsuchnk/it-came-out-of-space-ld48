@@ -25,6 +25,8 @@ import img_bunny_n from './assets/bunny_n.png';
 import img_imar from './assets/imar_ssheet.png';
 import img_imar_n from './assets/imar_ssheet_n.png';
 import img_lifebar from './assets/lifebar.png';
+import img_monstrosity from './assets/monstrosity.png';
+
 
 import img_fire from './assets/fire.png';
 import img_bubble from './assets/bubble.png';
@@ -35,6 +37,8 @@ import map_tut from './assets/map_tut.json';
 import map_o1 from './assets/map_o1.json';
 import map_o2 from './assets/map_o2.json';
 import map_o3 from './assets/map_o3.json';
+import map_o4 from './assets/map_o4.json';
+import map_o5 from './assets/map_z5.json';
 import map_end from './assets/map_end.json';
 
 import music_dark from './assets/sound/dark.mp3';
@@ -165,13 +169,15 @@ class Player extends Entity {
         if (this.finished) {
             return;
         }
+
         this.lives--;
         if (this.lives <= 0) {
             this.die();
         }
-
+        
         this.showLifebarCount = 60;
         this.showLifebar();
+        this.scene.cameras.main.shake(100, 0.008);
     }
 
     die() {
@@ -340,6 +346,61 @@ class Creature extends Entity {
     }
 }
 
+class Monstrosity extends Entity {
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key);
+        this.scene = scene;
+
+        this.body.setCollideWorldBounds(true);
+        this.body.setSize(40, 40);
+        this.body.setOffset((this.displayWidth-40)/2, this.displayHeight-40);
+
+        this.setDepth(this.y + this.displayHeight/2);
+
+        this.light = this.scene.lights.addLight(x, y, 128);
+        this.light.setColor(0xff00ff);
+        this.light.setIntensity(0.5);
+
+        this.lives = 5;
+    }
+
+    init() {
+        this.play('monstrosity_right', true);
+    }
+
+    update() {
+        this.light.x = this.x;
+        this.light.y = this.y;
+
+        let d = Phaser.Math.Distance.Squared(this.body.x, this.body.y, this.scene.player.x, this.scene.player.y);
+        if (d <= 500*500) {
+            let angle = Phaser.Math.Angle.Between(this.body.x, this.body.y, this.scene.player.x, this.scene.player.y);
+            this.scene.physics.velocityFromRotation(angle, 100, this.body.velocity);
+            if (this.body.velocity.x >= 0) {
+                this.play('monstrosity_right', true);
+            } else {
+                this.play('monstrosity_left', true);
+            }
+        } else {
+            this.body.setVelocity(0, 0);
+        }
+
+        this.setDepth(this.y+this.displayHeight/2);
+    }
+
+    die() {
+        this.scene.lights.removeLight(this.light);
+    }
+
+    takeDamage() {
+        this.lives--;
+        if (this.lives <= 0) {
+            return true;
+        }
+        return false;
+    }
+}
+
 class Bullet extends Entity {
     constructor(scene, x, y, key, dir) {
         super(scene, x, y, key);
@@ -395,14 +456,17 @@ class MyGame extends Phaser.Scene
 
         this.load.spritesheet('imar', [img_imar, img_imar_n], {frameWidth: 32, frameHeight: 48});
         this.load.spritesheet('bunny', [img_bunny, img_bunny_n], {frameWidth: 48, frameHeight: 33});
+        this.load.spritesheet('monstrosity', img_monstrosity, {frameWidth: 48, frameHeight: 64});
         this.load.spritesheet('lifebar', img_lifebar, {frameWidth: 32, frameHeight: 8});
-
+        
         this.load.tilemapTiledJSON('map1', map1);
         this.load.tilemapTiledJSON('map2', map2);
         this.load.tilemapTiledJSON('map_tut', map_tut);
         this.load.tilemapTiledJSON('map_o1', map_o1);
         this.load.tilemapTiledJSON('map_o2', map_o2);
         this.load.tilemapTiledJSON('map_o3', map_o3);
+        this.load.tilemapTiledJSON('map_o4', map_o4);
+        this.load.tilemapTiledJSON('map_o5', map_o5);
         this.load.tilemapTiledJSON('map_end', map_end);
 
         this.load.audio('music', music_dark);
@@ -415,6 +479,7 @@ class MyGame extends Phaser.Scene
         this.decorations = this.add.group();
         this.trees = this.physics.add.group();
         this.creatures = this.physics.add.group();
+        this.monstrosities = this.physics.add.group();
         this.bullets = this.physics.add.group();
 
         this.player = new Player(this, 300, 300, 'imar');
@@ -422,14 +487,29 @@ class MyGame extends Phaser.Scene
         this.colliderTrees = this.physics.add.collider(this.player, this.trees);
         this.colliderBuCr = this.physics.add.collider(this.bullets, this.creatures, (bu,cr) => {
             this.expl_emitter.explode(6, cr.x, cr.y);
+            this.cameras.main.shake(60, 0.004);
             bu.destroy();
             cr.die();
             cr.destroy();
         });
+        this.colliderBuMo = this.physics.add.collider(this.bullets, this.monstrosities, (bu,mo) => {
+            this.expl_emitter.explode(6, mo.x, mo.y);
+            this.cameras.main.shake(60, 0.005);
+            bu.destroy();
+            if (mo.takeDamage()) {
+                mo.die();
+                mo.destroy();
+            }
+        });
         this.colliderPlCr = this.physics.add.collider(this.player, this.creatures, (pl, cr) => {
-            console.log('bum');
             cr.die();
             cr.destroy();
+            pl.takeDamage();
+        });
+        this.colliderPlMo = this.physics.add.collider(this.player, this.monstrosities, (pl, mo) => {
+            mo.die();
+            mo.destroy();
+            pl.takeDamage();
             pl.takeDamage();
         });
         this.colliderWell = null;
@@ -437,7 +517,10 @@ class MyGame extends Phaser.Scene
         this.colliderPlMap = null;
         this.colliderCrMap = null;
         this.colliderBuMap = null;
+        this.colliderMoMap = null;
         this.colliderCrTrees = this.physics.add.collider(this.creatures, this.trees);
+        this.colliderMoTrees = this.physics.add.collider(this.monstrosities, this.trees);
+        this.colliderMoCr = this.physics.add.collider(this.monstrosities, this.creatures);
 
         this.expl_particles = this.add.particles('fire');
         this.expl_emitter = this.expl_particles.createEmitter({
@@ -465,13 +548,13 @@ class MyGame extends Phaser.Scene
         this.glows = [];
         this.well = null;
 
-        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map_o3', 'map_end'];
-        this.level = 0;
-
         this.bcg_music = this.sound.add('music');
         this.bcg_music.setLoop(true);
         this.bcg_music.play();
         
+
+        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map_o3', 'map_o4', 'map_o5', 'map_end'];
+        this.level = 5;
         this.fin = false;
         this.initLevel();
     }
@@ -488,6 +571,7 @@ class MyGame extends Phaser.Scene
 
         this.colliderPlMap = this.physics.add.collider(this.player, this.layer);
         this.colliderCrMap = this.physics.add.collider(this.creatures, this.layer);
+        this.colliderMoMap = this.physics.add.collider(this.monstrosities, this.layer);
         this.colliderBuMap = this.physics.add.collider(this.bullets, this.layer, (bu, la) => {
             this.expl_emitter.explode(6, bu.x, bu.y);
             bu.destroy();
@@ -500,12 +584,14 @@ class MyGame extends Phaser.Scene
         this.trees.children.each(x=>x.destroy());
         this.decorations.children.each(x=>x.destroy());
         this.creatures.children.each(x=>{x.die(); x.destroy();});
+        this.monstrosities.children.each(x=>{x.die(); x.destroy();});
         this.bullets.children.each(x=>{x.destroy();});
         this.layer.destroy();
         this.map.destroy();
         this.colliderPlMap.destroy();
         this.colliderCrMap.destroy();
         this.colliderBuMap.destroy();
+        this.colliderMoMap.destroy();
 
         for (let x of this.fireplaces) {
             x.destroy();
@@ -531,7 +617,6 @@ class MyGame extends Phaser.Scene
     }
 
     nextLevel() {
-        
         this.level++;
         if (this.level < this.maps.length) {
             this.destroyLevel();
@@ -568,6 +653,7 @@ class MyGame extends Phaser.Scene
         }
 
         this.creatures.children.each(x=>x.update());
+        this.monstrosities.children.each(x=>x.update());
     }
 
     loadScene() {
@@ -614,6 +700,11 @@ class MyGame extends Phaser.Scene
             let creature = new Creature(this, obj.x, obj.y, 'bunny');
             this.creatures.add(creature);
             creature.init();
+        });
+        this.map.filterObjects('monstrosities', (obj) => {
+            let monstrosity = new Monstrosity(this, obj.x, obj.y, 'monstrosity');
+            this.monstrosities.add(monstrosity);
+            monstrosity.init();
         });
         this.map.filterObjects('player', (obj) => {
             this.player.x = obj.x;
@@ -681,7 +772,7 @@ class MyGame extends Phaser.Scene
         this.anims.create({
             key: 'bunny_right',
             frames: this.anims.generateFrameNumbers('bunny', { start: 0, end: 1 }),
-            frameRate: 4,
+            frameRate: 5,
             repeat: -1
         });
         this.anims.create({
@@ -732,6 +823,19 @@ class MyGame extends Phaser.Scene
             frames: this.anims.generateFrameNumbers('lifebar', { start: 4, end: 4 }),
             frameRate: 1,
             repeat: 1
+        });
+
+        this.anims.create({
+            key: 'monstrosity_right',
+            frames: this.anims.generateFrameNumbers('monstrosity', { start: 0, end: 1 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'monstrosity_left',
+            frames: this.anims.generateFrameNumbers('monstrosity', { start: 2, end: 3 }),
+            frameRate: 4,
+            repeat: -1
         });
     }
 }
