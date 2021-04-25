@@ -27,12 +27,17 @@ import img_imar_n from './assets/imar_ssheet_n.png';
 import img_lifebar from './assets/lifebar.png';
 
 import img_fire from './assets/fire.png';
+import img_bubble from './assets/bubble.png';
 
 import map1 from './assets/map1.json';
 import map2 from './assets/map2.json';
 import map_tut from './assets/map_tut.json';
 import map_o1 from './assets/map_o1.json';
 import map_o2 from './assets/map_o2.json';
+import map_o3 from './assets/map_o3.json';
+import map_end from './assets/map_end.json';
+
+import music_dark from './assets/sound/dark.mp3';
 
 class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
@@ -74,6 +79,14 @@ class Player extends Entity {
 
         this.lifebar = this.scene.add.sprite(scene, x, y-32, 'lifebar');
         this.showLifebar();
+
+        this.finished = false;
+    }
+
+    finish() {
+        this.finished = true;
+        this.body.setVelocity(0, 0);
+        this.body.setImmovable(true);
     }
 
     goUp() {
@@ -149,13 +162,32 @@ class Player extends Entity {
     }
 
     takeDamage() {
+        if (this.finished) {
+            return;
+        }
         this.lives--;
+        if (this.lives <= 0) {
+            this.die();
+        }
 
         this.showLifebarCount = 60;
         this.showLifebar();
     }
 
+    die() {
+        this.scene.restartLevel();
+    }
+
+    revive() {
+        this.lives = 3;
+        this.showLifebarCount = 120;
+        this.showLifebar();
+    }
+
     showLifebar() {
+        if (this.finished) {
+            return;
+        }
         this.lifebar.visible = true;
         switch(this.lives) {
             case 1:
@@ -249,9 +281,6 @@ class Well extends Entity {
         this.body.setCollideWorldBounds(true);
         this.setPipeline('Light2D');
         
-        //this.body.setSize(24, 24);
-        //this.body.setOffset((this.displayWidth-24)/2, this.displayHeight-24);
-
         this.setDepth(this.y + this.displayHeight/2);
     }
 
@@ -263,6 +292,7 @@ class Well extends Entity {
 class Creature extends Entity {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
+        this.scene = scene;
 
         this.body.setCollideWorldBounds(true);
         //this.setPipeline('Light2D');
@@ -332,6 +362,7 @@ class Bullet extends Entity {
 
 class Glow {
     constructor(scene, x, y, r, intensity) {
+        this.scene = scene;
         this.light = scene.lights.addLight(x, y, r, 0xff00ff, intensity);
     }
 
@@ -360,6 +391,7 @@ class MyGame extends Phaser.Scene
         this.load.image('bullet', img_bullet);
         
         this.load.image('fire', img_fire);
+        this.load.image('bubble', img_bubble);
 
         this.load.spritesheet('imar', [img_imar, img_imar_n], {frameWidth: 32, frameHeight: 48});
         this.load.spritesheet('bunny', [img_bunny, img_bunny_n], {frameWidth: 48, frameHeight: 33});
@@ -370,6 +402,10 @@ class MyGame extends Phaser.Scene
         this.load.tilemapTiledJSON('map_tut', map_tut);
         this.load.tilemapTiledJSON('map_o1', map_o1);
         this.load.tilemapTiledJSON('map_o2', map_o2);
+        this.load.tilemapTiledJSON('map_o3', map_o3);
+        this.load.tilemapTiledJSON('map_end', map_end);
+
+        this.load.audio('music', music_dark);
     }
       
     create()
@@ -391,14 +427,16 @@ class MyGame extends Phaser.Scene
             cr.destroy();
         });
         this.colliderPlCr = this.physics.add.collider(this.player, this.creatures, (pl, cr) => {
-            pl.takeDamage();
+            console.log('bum');
             cr.die();
             cr.destroy();
+            pl.takeDamage();
         });
         this.colliderWell = null;
         this.colliderCrCr = this.physics.add.collider(this.creatures, this.creatures);
         this.colliderPlMap = null;
         this.colliderCrMap = null;
+        this.colliderBuMap = null;
         this.colliderCrTrees = this.physics.add.collider(this.creatures, this.trees);
 
         this.expl_particles = this.add.particles('fire');
@@ -423,20 +461,18 @@ class MyGame extends Phaser.Scene
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //
-        //let light = this.lights.addLight(500, 500, 5000);
-        //light.setColor(0xff00ff).setIntensity(20.0);
-
-        let light = this.lights.addLight(1700, 1450, 300);
-        light.setColor(0xff00ff).setIntensity(5.0);
-
-        //
         this.fireplaces = [];
         this.glows = [];
         this.well = null;
 
-        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map2'];
-        this.level = 1;
+        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map_o3', 'map_end'];
+        this.level = 0;
 
+        this.bcg_music = this.sound.add('music');
+        this.bcg_music.setLoop(true);
+        this.bcg_music.play();
+        
+        this.fin = false;
         this.initLevel();
     }
 
@@ -452,6 +488,10 @@ class MyGame extends Phaser.Scene
 
         this.colliderPlMap = this.physics.add.collider(this.player, this.layer);
         this.colliderCrMap = this.physics.add.collider(this.creatures, this.layer);
+        this.colliderBuMap = this.physics.add.collider(this.bullets, this.layer, (bu, la) => {
+            this.expl_emitter.explode(6, bu.x, bu.y);
+            bu.destroy();
+        });
 
         this.loadScene();
     }
@@ -459,19 +499,27 @@ class MyGame extends Phaser.Scene
     destroyLevel() {
         this.trees.children.each(x=>x.destroy());
         this.decorations.children.each(x=>x.destroy());
-        this.creatures.children.each(x=>x.destroy());
+        this.creatures.children.each(x=>{x.die(); x.destroy();});
+        this.bullets.children.each(x=>{x.destroy();});
         this.layer.destroy();
         this.map.destroy();
         this.colliderPlMap.destroy();
         this.colliderCrMap.destroy();
+        this.colliderBuMap.destroy();
 
         for (let x of this.fireplaces) {
             x.destroy();
         }
         this.fireplaces = [];
+        for (let x of this.glows) {
+            x.destroy();
+        }
+        this.glows = [];
 
         if (this.well != null) {
             this.well.destroy();
+        }
+        if (this.colliderWell != null) {
             this.colliderWell.destroy();
         }
     }
@@ -479,38 +527,47 @@ class MyGame extends Phaser.Scene
     restartLevel() {
         this.destroyLevel();
         this.initLevel();
+        this.player.revive();
     }
 
     nextLevel() {
-        this.destroyLevel();
+        
         this.level++;
-        this.initLevel();
+        if (this.level < this.maps.length) {
+            this.destroyLevel();
+            this.initLevel();
+        } else {
+            this.finishGame();
+        }
     }
 
     update() {
-        if (this.cursors.left.isDown && !this.cursors.right.isDown) {
-            this.player.goLeft();
-        } else if (this.cursors.right.isDown && !this.cursors.left.isDown) {
-            this.player.goRight();
-        } else {
-            this.player.stayX();
-        }
-        if (this.cursors.up.isDown && !this.cursors.down.isDown) {
-            this.player.goUp();
-        } else if (this.cursors.down.isDown && !this.cursors.up.isDown) {
-            this.player.goDown();
-        } else {
-            this.player.stayY();
-        }
+        if (!this.fin) {
+            if (this.cursors.left.isDown && !this.cursors.right.isDown) {
+                this.player.goLeft();
+            } else if (this.cursors.right.isDown && !this.cursors.left.isDown) {
+                this.player.goRight();
+            } else {
+                this.player.stayX();
+            }
+            if (this.cursors.up.isDown && !this.cursors.down.isDown) {
+                this.player.goUp();
+            } else if (this.cursors.down.isDown && !this.cursors.up.isDown) {
+                this.player.goDown();
+            } else {
+                this.player.stayY();
+            }
 
-        if (this.spaceKey.isDown) {
-            this.player.fire();
-        } else {
-            this.player.unfire();
+            if (this.spaceKey.isDown) {
+                this.player.fire();
+            } else {
+                this.player.unfire();
+            }
+            
+            this.player.update();
         }
 
         this.creatures.children.each(x=>x.update());
-        this.player.update();
     }
 
     loadScene() {
@@ -537,6 +594,16 @@ class MyGame extends Phaser.Scene
         this.map.filterObjects('fireplaces', (obj) => {
             this.fireplaces.push(new Fire(this, obj.x, obj.y));
         });
+        this.map.filterObjects('glows', (obj) => {
+            let r, intensity;
+            for (let p of obj.properties) {
+                if (p.name == 'r')
+                    r = p.value;
+                if (p.name == 'intensity')
+                    intensity = p.value;
+            }
+            this.glows.push(new Glow(this, obj.x, obj.y, r, intensity));
+        });
         this.map.filterObjects('well', (obj) => {
             this.well = new Decoration(this, obj.x, obj.y, 'well', false);
             this.colliderWell = this.physics.add.collider(this.player, this.well, (player, well) => {
@@ -552,6 +619,37 @@ class MyGame extends Phaser.Scene
             this.player.x = obj.x;
             this.player.y = obj.y;
         });
+    }
+
+    finishGame() {
+        this.fin = true;
+        this.player.finish();
+
+        this.cameras.main.stopFollow();
+        this.cameras.main.startFollow(this.well);
+
+        this.cameras.main.shake(500, 0.02);
+
+        this.bubble = this.add.particles('bubble');
+        for (let i=0; i<3; i++) {
+            this.bubble.createEmitter({
+                x: this.well.x,
+                y: this.well.y,
+                scale: {min: 0.5, max: 1.5},
+                alpha: {min: 0.1, max: 1},
+                speed: {min: 500, max: 1000},
+                angle: 270,
+                blendMode: 'ADD',
+                emitZone: {
+                    type: 'random',
+                    source: new Phaser.Geom.Circle(0, 0, 32),
+                },
+                lifespan: 500,
+            });
+        }
+
+        this.well.destroy();
+        this.player.visible = false;
     }
 
     createAnimations() {
