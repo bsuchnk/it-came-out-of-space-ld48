@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="18" height="14" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="134">
+ <editorsettings>
+  <export target="map_tut.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" margin="1" tilecount="15" columns="3">
+  <image source="tiles.png" width="198" height="330"/>
+  <tile id="0">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="collide" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="collide" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="18" height="14">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,15,15,15,15,1,1,1,
+1,1,1,1,14,1,1,14,1,1,1,15,15,15,15,1,1,1,
+1,1,1,14,14,1,1,14,1,1,1,1,15,15,1,1,1,1,
+1,1,14,13,13,1,1,14,1,1,1,1,1,1,1,1,1,1,
+1,14,13,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,
+14,13,1,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,
+14,1,1,1,1,1,1,14,1,1,1,1,1,1,1,1,1,1,
+13,5,5,5,5,6,1,14,14,14,14,14,14,14,14,14,14,14,
+8,8,8,8,8,9,1,13,13,13,13,13,13,13,13,13,13,13,
+8,8,8,8,8,9,1,1,1,1,1,1,1,1,1,1,1,1,
+8,11,11,11,11,12,1,1,1,1,1,1,1,1,1,1,1,1,
+12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="10" name="player">
+  <object id="126" x="1052" y="808">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="creatures"/>
+ <objectgroup id="8" name="well">
+  <object id="127" x="1052" y="101.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="blood">
+  <object id="133" x="1008" y="169.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="corpses">
+  <object id="130" x="38.6667" y="350.667">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="2" name="trees">
+  <object id="119" x="632" y="388">
+   <point/>
+  </object>
+  <object id="120" x="530.667" y="366.667">
+   <point/>
+  </object>
+  <object id="121" x="644" y="205.333">
+   <point/>
+  </object>
+  <object id="122" x="852" y="361.333">
+   <point/>
+  </object>
+  <object id="123" x="997.333" y="404">
+   <point/>
+  </object>
+  <object id="125" x="790.667" y="798.667">
+   <point/>
+  </object>
+  <object id="129" x="82.6667" y="166.667">
+   <point/>
+  </object>
+  <object id="132" x="126.667" y="640">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="flower1"/>
+ <objectgroup id="5" name="flower2"/>
+ <objectgroup id="3" name="flower3"/>
+</map>

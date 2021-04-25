@@ -5,7 +5,6 @@ import img_tree from './assets/tree.png';
 import img_tree_n from './assets/tree_n.png';
 import img_well from './assets/well.png';
 import img_well_n from './assets/well_n.png';
-import img_player from './assets/imar.png';
 
 import img_flower1 from './assets/flower1.png';
 import img_flower1_n from './assets/flower1_n.png';
@@ -13,16 +12,27 @@ import img_flower2 from './assets/flower2.png';
 import img_flower2_n from './assets/flower2_n.png';
 import img_flower3 from './assets/flower3.png';
 import img_flower3_n from './assets/flower3_n.png';
-import img_imar from './assets/imar_ssheet.png';
-import img_imar_n from './assets/imar_ssheet_n.png';
 import img_blood1 from './assets/blood.png';
 import img_blood1_n from './assets/blood_n.png';
 import img_corpse1 from './assets/corpse1.png';
 import img_corpse1_n from './assets/corpse1_n.png';
+
+import img_bullet from './assets/bullet.png';
+//import img_bullet_n from './assets/bullet_n.png';
+
+import img_bunny from './assets/bunny.png';
+import img_bunny_n from './assets/bunny_n.png';
+import img_imar from './assets/imar_ssheet.png';
+import img_imar_n from './assets/imar_ssheet_n.png';
+import img_lifebar from './assets/lifebar.png';
+
 import img_fire from './assets/fire.png';
 
 import map1 from './assets/map1.json';
 import map2 from './assets/map2.json';
+import map_tut from './assets/map_tut.json';
+import map_o1 from './assets/map_o1.json';
+import map_o2 from './assets/map_o2.json';
 
 class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key) {
@@ -45,6 +55,12 @@ class Player extends Entity {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
 
+        this.v = 200;
+        this.bulletAmount = 10;
+        this.fired = false;
+        this.lives = 5;
+        this.showLifebarCount = 120;
+
         this.body.setCollideWorldBounds(true);
         this.body.setSize(20 ,16);
         this.body.setOffset((this.displayWidth-20)/2, this.displayHeight-16);
@@ -52,11 +68,12 @@ class Player extends Entity {
         this.setDepth(y);
         this.scene.cameras.main.startFollow(this);
 
-        this.v = 200;
-
         this.light = this.scene.lights.addLight(x, y, 200);
 
         this.going = false;
+
+        this.lifebar = this.scene.add.sprite(scene, x, y-32, 'lifebar');
+        this.showLifebar();
     }
 
     goUp() {
@@ -104,6 +121,59 @@ class Player extends Entity {
             }
         }
         this.going = false;
+
+        this.lifebar.x = this.x;
+        this.lifebar.y = this.y - 28;
+        if (this.showLifebarCount > 0) {
+            this.showLifebarCount--;
+            if (this.showLifebarCount == 0) {
+                this.lifebar.visible = false;
+            }
+        }
+    }
+
+    fire() {
+        if (this.fired)
+            return;
+
+        this.fired = true;
+        this.bulletAmount--;
+
+        let bullet = new Bullet(this.scene, this.x, this.y, 'bullet', this.dir)
+        this.scene.bullets.add(bullet);
+        bullet.init();
+    }
+
+    unfire() {
+        this.fired = false;
+    }
+
+    takeDamage() {
+        this.lives--;
+
+        this.showLifebarCount = 60;
+        this.showLifebar();
+    }
+
+    showLifebar() {
+        this.lifebar.visible = true;
+        switch(this.lives) {
+            case 1:
+                this.lifebar.play('lifebar1', true);
+                break;
+            case 2:
+                this.lifebar.play('lifebar2', true);
+                break;
+            case 3:
+                this.lifebar.play('lifebar3', true);
+                break;
+            case 4:
+                this.lifebar.play('lifebar4', true);
+                break;
+            case 5:
+                this.lifebar.play('lifebar5', true);
+                break;
+        }
     }
 }
 
@@ -144,10 +214,11 @@ class Fire {
         this.x = x;
         this.y = y;
 
-        this.scene.fire_particles.createEmitter({
+        this.particle = this.scene.add.particles('fire');
+        this.particle.setDepth(this.y + 16);
+        this.emitter = this.particle.createEmitter({
             alpha: { start: 0.5, end: 0 },
             scale: { start: 1, end: 2 },
-            //tint: { start: 0xff945e, end: 0xff945e },
             repeat: -1,
             speed: 32,
             accelerationY: -24,
@@ -163,6 +234,11 @@ class Fire {
 
         this.light = this.scene.lights.addLight(this.x, this.y, 175);
         this.light.setColor(0xe25822).setIntensity(1.5);
+    }
+
+    destroy() {
+        this.scene.lights.removeLight(this.light);
+        this.particle.destroy();
     }
 }
 
@@ -184,6 +260,86 @@ class Well extends Entity {
     }
 }
 
+class Creature extends Entity {
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key);
+
+        this.body.setCollideWorldBounds(true);
+        //this.setPipeline('Light2D');
+
+        this.setDepth(this.y + this.displayHeight/2);
+
+        this.light = this.scene.lights.addLight(x, y, 64);
+        this.light.setColor(0xff00ff);
+        this.light.setIntensity(0.25);
+    }
+
+    init() {
+        //this.body.setImmovable(true);
+        this.body.setVelocityX(2);
+        this.play('bunny_right', true);
+    }
+
+    update() {
+        this.light.x = this.x;
+        this.light.y = this.y;
+
+        let d = Phaser.Math.Distance.Squared(this.body.x, this.body.y, this.scene.player.x, this.scene.player.y);
+        if (d <= 300*300) {
+            let angle = Phaser.Math.Angle.Between(this.body.x, this.body.y, this.scene.player.x, this.scene.player.y);
+            this.scene.physics.velocityFromRotation(angle, 150, this.body.velocity);
+            if (this.body.velocity.x >= 0) {
+                this.play('bunny_right', true);
+            } else {
+                this.play('bunny_left', true);
+            }
+        } else {
+            if (this.body.velocity.x > 0) {
+                this.play('bunny_sit_right', true);
+            } else if (this.body.velocity.x < 0) {
+                this.play('bunny_sit_left', true);
+            }
+            this.body.setVelocity(0, 0);
+        }
+
+        this.setDepth(this.y+this.displayHeight/2);
+    }
+
+    die() {
+        this.scene.lights.removeLight(this.light);
+    }
+}
+
+class Bullet extends Entity {
+    constructor(scene, x, y, key, dir) {
+        super(scene, x, y, key);
+        this.dir = dir;
+
+        this.body.setCollideWorldBounds(true);
+        this.setPipeline('Light2D');
+
+        this.setDepth(this.y + this.displayHeight/2);
+    }
+
+    init() {
+        if (this.dir == this.dirEnum.RIGHT) {
+            this.body.setVelocityX(500);
+        } else {
+            this.body.setVelocityX(-500);
+        }
+    }
+}
+
+class Glow {
+    constructor(scene, x, y, r, intensity) {
+        this.light = scene.lights.addLight(x, y, r, 0xff00ff, intensity);
+    }
+
+    destroy() {
+        this.scene.lights.removeLight(this.light);
+    }
+}
+
 class MyGame extends Phaser.Scene
 {
     constructor ()
@@ -201,65 +357,101 @@ class MyGame extends Phaser.Scene
         this.load.image('flower3', [img_flower3, img_flower3_n]);
         this.load.image('blood1', [img_blood1, img_blood1_n]);
         this.load.image('corpse1', [img_corpse1, img_corpse1_n]);
-        this.load.image('player', img_player);
+        this.load.image('bullet', img_bullet);
+        
         this.load.image('fire', img_fire);
 
         this.load.spritesheet('imar', [img_imar, img_imar_n], {frameWidth: 32, frameHeight: 48});
+        this.load.spritesheet('bunny', [img_bunny, img_bunny_n], {frameWidth: 48, frameHeight: 33});
+        this.load.spritesheet('lifebar', img_lifebar, {frameWidth: 32, frameHeight: 8});
 
         this.load.tilemapTiledJSON('map1', map1);
         this.load.tilemapTiledJSON('map2', map2);
+        this.load.tilemapTiledJSON('map_tut', map_tut);
+        this.load.tilemapTiledJSON('map_o1', map_o1);
+        this.load.tilemapTiledJSON('map_o2', map_o2);
     }
       
     create()
     {
         this.createAnimations();
 
-
         this.decorations = this.add.group();
         this.trees = this.physics.add.group();
+        this.creatures = this.physics.add.group();
+        this.bullets = this.physics.add.group();
 
         this.player = new Player(this, 300, 300, 'imar');
 
         this.colliderTrees = this.physics.add.collider(this.player, this.trees);
+        this.colliderBuCr = this.physics.add.collider(this.bullets, this.creatures, (bu,cr) => {
+            this.expl_emitter.explode(6, cr.x, cr.y);
+            bu.destroy();
+            cr.die();
+            cr.destroy();
+        });
+        this.colliderPlCr = this.physics.add.collider(this.player, this.creatures, (pl, cr) => {
+            pl.takeDamage();
+            cr.die();
+            cr.destroy();
+        });
+        this.colliderWell = null;
+        this.colliderCrCr = this.physics.add.collider(this.creatures, this.creatures);
+        this.colliderPlMap = null;
+        this.colliderCrMap = null;
+        this.colliderCrTrees = this.physics.add.collider(this.creatures, this.trees);
+
+        this.expl_particles = this.add.particles('fire');
+        this.expl_emitter = this.expl_particles.createEmitter({
+            alpha: { start: 0.2, end: 0 },
+            scale: { start: 0.5, end: 1 },
+            speed: { min: 10, max: 50 },
+            repeat: -1,
+            rotate: { min: -180, max: 180 },
+            lifespan: { min: 300, max: 400 },
+            blendMode: 'ADD',
+            emitZone: {
+                type: 'random',
+                source: new Phaser.Geom.Circle(0, 0, 8),
+            },
+            on: false,
+        });
 
         this.lights.enable().setAmbientColor(0x555555);
 
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //
         //let light = this.lights.addLight(500, 500, 5000);
         //light.setColor(0xff00ff).setIntensity(20.0);
 
-        //let light = this.lights.addLight(500, 500, 300);
-        //light.setColor(0xff00ff).setIntensity(5.0);
+        let light = this.lights.addLight(1700, 1450, 300);
+        light.setColor(0xff00ff).setIntensity(5.0);
 
         //
-        // this.fire_particles = this.add.particles('fire');
-        // this.fireplaces = [];
-        // this.fireplaces.push(new Fire(this, 400, 300));
-
-        this.colliderWell = null;
-
+        this.fireplaces = [];
+        this.glows = [];
         this.well = null;
 
-        this.maps = ['map1', 'map2'];
-        this.level = 0;
+        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map2'];
+        this.level = 1;
 
         this.initLevel();
-        //this.loadScene();
-
-        //this.nextLevel();
     }
 
     initLevel() {
         this.map = this.make.tilemap({key: this.maps[this.level]});
-        console.log(this.map);
         let tiles = this.map.addTilesetImage('tiles', 'tiles');
         this.layer = this.map.createLayer(0, tiles, 0, 0);
+        this.layer.setCollisionByProperty({ collide: true });
         this.layer.setPipeline('Light2D');
         this.layer.setDepth(-100);
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+        this.colliderPlMap = this.physics.add.collider(this.player, this.layer);
+        this.colliderCrMap = this.physics.add.collider(this.creatures, this.layer);
 
         this.loadScene();
     }
@@ -267,8 +459,17 @@ class MyGame extends Phaser.Scene
     destroyLevel() {
         this.trees.children.each(x=>x.destroy());
         this.decorations.children.each(x=>x.destroy());
+        this.creatures.children.each(x=>x.destroy());
         this.layer.destroy();
         this.map.destroy();
+        this.colliderPlMap.destroy();
+        this.colliderCrMap.destroy();
+
+        for (let x of this.fireplaces) {
+            x.destroy();
+        }
+        this.fireplaces = [];
+
         if (this.well != null) {
             this.well.destroy();
             this.colliderWell.destroy();
@@ -301,6 +502,14 @@ class MyGame extends Phaser.Scene
         } else {
             this.player.stayY();
         }
+
+        if (this.spaceKey.isDown) {
+            this.player.fire();
+        } else {
+            this.player.unfire();
+        }
+
+        this.creatures.children.each(x=>x.update());
         this.player.update();
     }
 
@@ -323,13 +532,25 @@ class MyGame extends Phaser.Scene
             this.decorations.add(new Decoration(this, obj.x, obj.y, 'blood1', true));
         });
         this.map.filterObjects('corpses', (obj) => {
-            this.decorations.add(new Decoration(this, obj.x, obj.y, 'corpse1', false)); // zmienic na przeszkode
+            this.decorations.add(new Decoration(this, obj.x, obj.y, 'corpse1', false));
+        });
+        this.map.filterObjects('fireplaces', (obj) => {
+            this.fireplaces.push(new Fire(this, obj.x, obj.y));
         });
         this.map.filterObjects('well', (obj) => {
             this.well = new Decoration(this, obj.x, obj.y, 'well', false);
             this.colliderWell = this.physics.add.collider(this.player, this.well, (player, well) => {
                 this.nextLevel();
             }, null, this);
+        });
+        this.map.filterObjects('creatures', (obj) => {
+            let creature = new Creature(this, obj.x, obj.y, 'bunny');
+            this.creatures.add(creature);
+            creature.init();
+        });
+        this.map.filterObjects('player', (obj) => {
+            this.player.x = obj.x;
+            this.player.y = obj.y;
         });
     }
 
@@ -357,6 +578,62 @@ class MyGame extends Phaser.Scene
             frames: this.anims.generateFrameNumbers('imar', { start: 6, end: 7 }),
             frameRate: 6,
             repeat: -1
+        });
+
+        this.anims.create({
+            key: 'bunny_right',
+            frames: this.anims.generateFrameNumbers('bunny', { start: 0, end: 1 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'bunny_sit_right',
+            frames: this.anims.generateFrameNumbers('bunny', { start: 0, end: 0 }),
+            frameRate: 1,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'bunny_left',
+            frames: this.anims.generateFrameNumbers('bunny', { start: 2, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'bunny_sit_left',
+            frames: this.anims.generateFrameNumbers('bunny', { start: 2, end: 2 }),
+            frameRate: 1,
+            repeat: 1
+        });
+
+        this.anims.create({
+            key: 'lifebar1',
+            frames: this.anims.generateFrameNumbers('lifebar', { start: 0, end: 0 }),
+            frameRate: 1,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'lifebar2',
+            frames: this.anims.generateFrameNumbers('lifebar', { start: 1, end: 1 }),
+            frameRate: 1,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'lifebar3',
+            frames: this.anims.generateFrameNumbers('lifebar', { start: 2, end: 2 }),
+            frameRate: 1,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'lifebar4',
+            frames: this.anims.generateFrameNumbers('lifebar', { start: 3, end: 3 }),
+            frameRate: 1,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'lifebar5',
+            frames: this.anims.generateFrameNumbers('lifebar', { start: 4, end: 4 }),
+            frameRate: 1,
+            repeat: 1
         });
     }
 }
