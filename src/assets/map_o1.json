@@ -26,43 +26,7 @@
          "draworder":"topdown",
          "id":11,
          "name":"fireplaces",
-         "objects":[
-                {
-                 "height":0,
-                 "id":165,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":425.484764542936,
-                 "y":1219.10634710346
-                }, 
-                {
-                 "height":0,
-                 "id":166,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":582.729134047935,
-                 "y":1257.95495603999
-                }, 
-                {
-                 "height":0,
-                 "id":167,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":739.973503552933,
-                 "y":1217.25641334457
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -581,6 +545,18 @@
                  "width":0,
                  "x":560.529928941346,
                  "y":94.3466217029989
+                }, 
+                {
+                 "height":0,
+                 "id":174,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":797.321450078285,
+                 "y":1135.85932795375
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -623,7 +599,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":174,
+ "nextobjectid":175,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

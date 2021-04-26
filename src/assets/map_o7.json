@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"map_o6.json"
+         "target":"map_o7.json"
         }
     },
  "height":28,
@@ -406,19 +406,7 @@
          "draworder":"topdown",
          "id":8,
          "name":"well",
-         "objects":[
-                {
-                 "height":0,
-                 "id":701,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":606.060606060606,
-                 "y":66.6666666666667
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -1372,7 +1360,7 @@
                         {
                          "name":"intensity",
                          "type":"float",
-                         "value":7.2
+                         "value":7
                         }, 
                         {
                          "name":"r",
@@ -1383,8 +1371,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":957.575757575758,
-                 "y":-57.5757575757576
+                 "x":954.545454545455,
+                 "y":-12.1212121212121
                 }, 
                 {
                  "height":0,
@@ -2504,7 +2492,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":702,
+ "nextobjectid":700,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

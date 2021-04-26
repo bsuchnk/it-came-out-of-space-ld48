@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="26" height="16" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="508">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="26" height="16" tilewidth="64" tileheight="64" infinite="0" nextlayerid="15" nextobjectid="511">
  <editorsettings>
   <export target="map_z5.json" format="json"/>
  </editorsettings>
@@ -101,6 +101,11 @@
 3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
+ <objectgroup id="14" name="trees2">
+  <object id="509" x="276.157" y="631.437">
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup id="11" name="fireplaces">
   <object id="454" x="669.697" y="712.121">
    <point/>
@@ -235,9 +240,6 @@
    <point/>
   </object>
   <object id="426" x="157.576" y="118.182">
-   <point/>
-  </object>
-  <object id="427" x="275.758" y="633.333">
    <point/>
   </object>
   <object id="428" x="657.576" y="3.0303">

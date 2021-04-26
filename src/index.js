@@ -5,6 +5,10 @@ import img_tree from './assets/tree.png';
 import img_tree_n from './assets/tree_n.png';
 import img_well from './assets/well.png';
 import img_well_n from './assets/well_n.png';
+import img_tree2 from './assets/tree2.png';
+import img_tree2_n from './assets/tree2_n.png';
+import img_sign from './assets/sign.png';
+import img_sign_n from './assets/sign_n.png';
 
 import img_flower1 from './assets/flower1.png';
 import img_flower1_n from './assets/flower1_n.png';
@@ -18,7 +22,6 @@ import img_corpse1 from './assets/corpse1.png';
 import img_corpse1_n from './assets/corpse1_n.png';
 
 import img_bullet from './assets/bullet.png';
-//import img_bullet_n from './assets/bullet_n.png';
 
 import img_bunny from './assets/bunny.png';
 import img_bunny_n from './assets/bunny_n.png';
@@ -31,6 +34,8 @@ import img_monstrosity from './assets/monstrosity.png';
 import img_fire from './assets/fire.png';
 import img_bubble from './assets/bubble.png';
 
+import img_mmenu from './assets/mmenu.png';
+
 import map1 from './assets/map1.json';
 import map2 from './assets/map2.json';
 import map_tut from './assets/map_tut.json';
@@ -39,6 +44,7 @@ import map_o2 from './assets/map_o2.json';
 import map_o3 from './assets/map_o3.json';
 import map_o4 from './assets/map_o4.json';
 import map_o5 from './assets/map_z5.json';
+import map_o6 from './assets/map_o6.json';
 import map_end from './assets/map_end.json';
 
 import music_dark from './assets/sound/dark.mp3';
@@ -432,6 +438,37 @@ class Glow {
     }
 }
 
+class Intro {
+    constructor(scene) {
+        this.is = true;
+
+        let style = {
+            fontSize: '24px',
+            fill: '#000',
+            stroke: '#f0f',
+            strokeThickness: 1,
+        }
+        let x = scene.player.x;
+        let y = scene.player.y;
+        this.bcg = scene.add.image(x, y, 'mmenu');
+        this.t1 = scene.add.text(x+180, y+80, "arrow keys to move", style);
+        this.t2 = scene.add.text(x+180, y+120, "space key to shoot", style);
+        this.t3 = scene.add.text(x+180, y+200, "press space", style);
+        this.t1.setOrigin(0.5).setDepth(9999);
+        this.t2.setOrigin(0.5).setDepth(9999);
+        this.t3.setOrigin(0.5).setDepth(9999);
+        this.bcg.setDepth(9999);
+    }
+
+    destroy() {
+        this.is = false;
+        this.t1.destroy();
+        this.t2.destroy();
+        this.t3.destroy();
+        this.bcg.destroy();
+    }
+}
+
 class MyGame extends Phaser.Scene
 {
     constructor ()
@@ -450,9 +487,13 @@ class MyGame extends Phaser.Scene
         this.load.image('blood1', [img_blood1, img_blood1_n]);
         this.load.image('corpse1', [img_corpse1, img_corpse1_n]);
         this.load.image('bullet', img_bullet);
+        this.load.image('tree2', [img_tree2, img_tree2_n]);
+        this.load.image('sign', [img_sign, img_sign_n]);
         
         this.load.image('fire', img_fire);
         this.load.image('bubble', img_bubble);
+
+        this.load.image('mmenu', img_mmenu);
 
         this.load.spritesheet('imar', [img_imar, img_imar_n], {frameWidth: 32, frameHeight: 48});
         this.load.spritesheet('bunny', [img_bunny, img_bunny_n], {frameWidth: 48, frameHeight: 33});
@@ -467,6 +508,7 @@ class MyGame extends Phaser.Scene
         this.load.tilemapTiledJSON('map_o3', map_o3);
         this.load.tilemapTiledJSON('map_o4', map_o4);
         this.load.tilemapTiledJSON('map_o5', map_o5);
+        this.load.tilemapTiledJSON('map_o6', map_o6);
         this.load.tilemapTiledJSON('map_end', map_end);
 
         this.load.audio('music', music_dark);
@@ -521,6 +563,7 @@ class MyGame extends Phaser.Scene
         this.colliderCrTrees = this.physics.add.collider(this.creatures, this.trees);
         this.colliderMoTrees = this.physics.add.collider(this.monstrosities, this.trees);
         this.colliderMoCr = this.physics.add.collider(this.monstrosities, this.creatures);
+        this.colliderMoMo = this.physics.add.collider(this.monstrosities, this.monstrosities);
 
         this.expl_particles = this.add.particles('fire');
         this.expl_emitter = this.expl_particles.createEmitter({
@@ -553,10 +596,12 @@ class MyGame extends Phaser.Scene
         this.bcg_music.play();
         
 
-        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map_o3', 'map_o4', 'map_o5', 'map_end'];
-        this.level = 5;
+        this.maps = ['map_tut', 'map_o1', 'map_o2', 'map_o3', 'map_o4', 'map_o5', 'map_o6', 'map_end'];
+        this.level = 0;
         this.fin = false;
-        this.initLevel();
+        //this.initLevel();
+
+        this.intro = new Intro(this);
     }
 
     initLevel() {
@@ -605,9 +650,6 @@ class MyGame extends Phaser.Scene
         if (this.well != null) {
             this.well.destroy();
         }
-        if (this.colliderWell != null) {
-            this.colliderWell.destroy();
-        }
     }
 
     restartLevel() {
@@ -627,6 +669,15 @@ class MyGame extends Phaser.Scene
     }
 
     update() {
+        if (this.intro.is) {
+            if (this.spaceKey.isDown) {
+                this.intro.destroy();
+                this.player.fired = true;
+                this.initLevel();
+            }
+            return;
+        }
+
         if (!this.fin) {
             if (this.cursors.left.isDown && !this.cursors.right.isDown) {
                 this.player.goLeft();
@@ -662,6 +713,11 @@ class MyGame extends Phaser.Scene
                 this.trees.add(tree);
                 tree.init();
         });
+        this.map.filterObjects('trees2', (obj) => {
+            let tree = new Tree(this, obj.x, obj.y, 'tree2')
+            this.trees.add(tree);
+            tree.init();
+    });
         this.map.filterObjects('flower1', (obj) => {
             this.decorations.add(new Decoration(this, obj.x, obj.y, 'flower1', false));
         });
@@ -691,7 +747,11 @@ class MyGame extends Phaser.Scene
             this.glows.push(new Glow(this, obj.x, obj.y, r, intensity));
         });
         this.map.filterObjects('well', (obj) => {
-            this.well = new Decoration(this, obj.x, obj.y, 'well', false);
+            if (this.level == this.maps.length-1) {
+                this.well = new Decoration(this, obj.x, obj.y, 'well', false);
+            } else {
+                this.well = new Decoration(this, obj.x, obj.y, 'sign', false);
+            }
             this.colliderWell = this.physics.add.collider(this.player, this.well, (player, well) => {
                 this.nextLevel();
             }, null, this);
@@ -739,8 +799,36 @@ class MyGame extends Phaser.Scene
             });
         }
 
+        let wX = this.well.x;
+        let wY = this.well.y;
+
         this.well.destroy();
         this.player.visible = false;
+
+        this.time.addEvent({
+            delay: 3500, 
+            callback: () => {
+                let ld = this.add.text(wX, wY+180, "LD48", {
+                    fontSize: '48px',
+                    fill: '#000',
+                    stroke: '#f0f',
+                    strokeThickness: 1,
+                });
+                ld.setOrigin(0.5);
+                ld.setDepth(10000);
+
+                let bs = this.add.text(wX, wY+220, "Bartosz Suchanek", {
+                    fontSize: '40px',
+                    fill: '#000',
+                    stroke: '#f0f',
+                    strokeThickness: 1,
+                });
+                bs.setOrigin(0.5);
+                bs.setDepth(10000);
+            },
+            callbackScope: this,
+            loop: false,
+        });
     }
 
     createAnimations() {
